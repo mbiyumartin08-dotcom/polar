@@ -13,7 +13,7 @@ export default function MenuDetail() {
   const [newPrice, setNewPrice] = useState("");
   const [message, setMessage] = useState(null);
 
-  // Put the current price in the input once the product has loaded
+ 
   useEffect(() => {
     if (product) setNewPrice(String(product.price));
   }, [product]);
@@ -42,7 +42,7 @@ export default function MenuDetail() {
     const ok = await updatePrice(product.id, price);
     if (ok) {
       setMessage({ type: "success", text: "Price updated" });
-      refetch(); // reload this product so the page shows the new price
+      refetch(); 
     }
   }
 
