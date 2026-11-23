@@ -36,6 +36,7 @@ export default function Dashboard() {
   if (loading) return <p className="page status-message">Loading dashboard...</p>;
   if (error) return <p className="page status-message error">Could not load orders: {error}</p>;
 
+
   return (
     <section className="page">
       <div className="page-header">
