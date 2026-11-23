@@ -40,6 +40,7 @@ test("saving a new price sends PATCH with the price", async () => {
   });
 });
 
+
 test("delete asks for confirmation, sends DELETE and goes to /menu", async () => {
   const fetchMock = mockFetch();
   vi.spyOn(window, "confirm").mockReturnValue(true);
