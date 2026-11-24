@@ -1,0 +1,6 @@
+/* src/index.css
+   Keep this file tiny. All styling lives in App.css.
+   (The default Vite index.css centers the page and breaks the layout, so replace it.) */
+html {
+  scroll-behavior: smooth;
+}
