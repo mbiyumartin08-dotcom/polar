@@ -1,3 +1,4 @@
+// Edward - Mwai - detail page
 import { useEffect, useId, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
