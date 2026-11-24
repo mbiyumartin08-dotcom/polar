@@ -1,3 +1,4 @@
+// Edward - Mwai - detail tests
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Route, Routes } from "react-router-dom";
