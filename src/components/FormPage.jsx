@@ -36,7 +36,7 @@ function validate(form, isDraft) {
   return errors;
 }
 
-// Label + control + error message. Defined outside FormPage so it is not recreated each render.
+//Label + control + error message. Defined outside FormPage so it is not recreated each render.
 function Field({ id, label, error, children }) {
   return (
     <div className={`field ${error ? "invalid" : ""}`}>
@@ -68,7 +68,7 @@ export default function FormPage() {
     nameInput.current?.focus();
   }, []);
 
-  function handleChange(e) {
+function handleChange(e) {
     const { name, value } = e.target;
     setForm((current) => ({ ...current, [name]: value }));
   }
@@ -196,7 +196,7 @@ export default function FormPage() {
               </datalist>
             </Field>
             <Field id={`${uid}-sub`} label="Product Sub-Category">
-              <input id={`${uid}-sub`} name="subCategory" list={`${uid}-subs`} value={form.subCategory} onChange={handleChange} placeholder="Optional" />
+              <input id={`${uid}-sub`} name="subCategory" list={`${uid}-subs    `} value={form.subCategory} onChange={handleChange} placeholder="Optional" />
               <datalist id={`${uid}-subs`}>
                 {subCategories.map((c) => (
                   <option key={c} value={c} />
