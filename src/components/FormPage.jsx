@@ -35,6 +35,43 @@ function validate(form, isDraft) {
   if (Number(form.minOrder) < 1) errors.minOrder = "Minimum order is 1";
   return errors;
 }
+/*import { useEffect, useId, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useProductActions from "../hooks/useProductActions";
+import { useProducts } from "../context/ProductsContext";
+import Icon from "./Icons";
+import { money, finalPrice } from "../utils";
+
+const EMPTY_FORM = {
+  name: "",
+  tag: "",
+  description: "",
+  costPrice: "",
+  price: "",
+  discount: "0",
+  minOrder: "1",
+  category: "",
+  subCategory: "",
+  image: "",
+};
+const MAX_IMAGE_BYTES = 500 * 1024;
+
+function validate(form, isDraft) {
+  const errors = {};
+  if (!form.name.trim()) errors.name = "Name is required";
+  if (isDraft) return errors;
+  if (!form.description.trim()) errors.description = "Description is required";
+  if (!form.category.trim()) errors.category = "Category is required";
+  const price = Number(form.price);
+  if (form.price === "" || Number.isNaN(price) || price <= 0) {
+    errors.price = "Enter a price greater than 0";
+  }
+  if (form.costPrice !== "" && (Number.isNaN(Number(form.costPrice)) || Number(form.costPrice) < 0)) {
+    errors.costPrice = "Enter a valid cost";
+  }
+  if (Number(form.minOrder) < 1) errors.minOrder = "Minimum order is 1";
+  return errors;
+}
 
 // Label + control + error message. Defined outside FormPage so it is not recreated each render.
 function Field({ id, label, error, children }) {
@@ -253,4 +290,4 @@ export default function FormPage() {
       </form>
     </section>
   );
-}
+}*/
