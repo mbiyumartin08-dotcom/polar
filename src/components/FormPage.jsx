@@ -50,21 +50,24 @@ function Field({ id, label, error, children }) {
     </div>
   );
 }
+
+export default function FormPage() {
+  const [form, setForm] = useState(EMPTY_FORM);
+  const [errors, setErrors] = useState({});
+  const [imageError, setImageError] = useState(null);
+  const nameInput = useRef(null);
+  const navigate = useNavigate();
+  const uid = useId();
+  const { products } = useProducts();
+  const { addProduct, saving, error } = useProductActions();
+
+  const categories = [...new Set(products.map((p) => p.category))];
+  const subCategories = [...new Set(products.map((p) => p.subCategory).filter(Boolean))];
+
+  useEffect(() => {
+    nameInput.current?.focus();
+  }, []);
 /*
-// Label + control + error message. Defined outside FormPage so it is not recreated each render.
-function Field({ id, label, error, children }) {
-  return (
-    <div className={`field ${error ? "invalid" : ""}`}>
-      <label htmlFor={id}>{label}</label>
-      {children}
-      {error && (
-        <span className="field-error" role="alert">
-          {error}
-        </span>
-      )}
-    </div>
-  );
-}
 
 export default function FormPage() {
   const [form, setForm] = useState(EMPTY_FORM);
