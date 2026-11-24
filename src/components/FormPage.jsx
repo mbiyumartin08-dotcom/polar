@@ -67,42 +67,54 @@ export default function FormPage() {
   useEffect(() => {
     nameInput.current?.focus();
   }, []);
+
+function handleChange(e) {
+    const { name, value } = e.target;
+    setForm((current) => ({ ...current, [name]: value }));
+  }
+
+  function handleImage(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > MAX_IMAGE_BYTES) {
+      setImageError("Image must be under 500 KB");
+      return;
+    }
+    setImageError(null);
+    const reader = new FileReader();
+    reader.onload = () => setForm((f) => ({ ...f, image: reader.result }));
+    reader.readAsDataURL(file);
+  }
+
+  async function submit(isDraft) {
+    const found = validate(form, isDraft);
+    setErrors(found);
+    if (Object.keys(found).length > 0) return;
+
+    const ok = await addProduct({
+      name: form.name.trim(),
+      tag: form.tag.trim(),
+      description: form.description.trim(),
+      category: form.category.trim() || "Uncategorised",
+      subCategory: form.subCategory.trim(),
+      costPrice: form.costPrice === "" ? null : Number(form.costPrice),
+      price: Number(form.price) || 0,
+      discount: Number(form.discount),
+      minOrder: Number(form.minOrder) || 1,
+      stock: 20,
+      image: form.image,
+      draft: isDraft,
+    });
+    if (ok) navigate("/menu");
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    submit(false);
+  }
+
+  const previewPrice = finalPrice({ price: Number(form.price) || 0, discount: form.discount });
 /*
-
-export default function FormPage() {
-  const [form, setForm] = useState(EMPTY_FORM);
-  const [errors, setErrors] = useState({});
-  const [imageError, setImageError] = useState(null);
-  const nameInput = useRef(null);
-  const navigate = useNavigate();
-  const uid = useId();
-  const { products } = useProducts();
-  const { addProduct, saving, error } = useProductActions();
-
-  const categories = [...new Set(products.map((p) => p.category))];
-  const subCategories = [...new Set(products.map((p) => p.subCategory).filter(Boolean))];
-
-  useEffect(() => {
-    nameInput.current?.focus();
-  }, []);
-
- 
-
-// Label + control + error message. Defined outside FormPage so it is not recreated each render.
-function Field({ id, label, error, children }) {
-  return (
-    <div className={`field ${error ? "invalid" : ""}`}>
-      <label htmlFor={id}>{label}</label>
-      {children}
-      {error && (
-        <span className="field-error" role="alert">
-          {error}
-        </span>
-      )}
-    </div>
-  );
-}
-
 export default function FormPage() {
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
