@@ -1,16 +1,41 @@
-# React + Vite
+# Polar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Polar is a React application built with Vite. Its product entry form is available at `/menu/new` and is implemented in [src/components/FormPage.jsx](./src/components/FormPage.jsx).
 
-Currently, two official plugins are available:
+## FormPage: Add a Product
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The FormPage lets a store user create a product, optionally save it as a draft, and see a simple preview before submitting. It is designed to run within the app's router and shared products provider.
 
-## React Compiler
+### Product details
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The form collects:
 
-## Expanding the ESLint configuration
+- **Name and description:** product name, optional tag, and description.
+- **Pricing:** cost price, selling price, discount, and minimum order quantity. Prices use Ksh; discount choices are 0%, 5%, 10%, 15%, and 20%.
+- **Category:** category and optional sub-category. Existing product categories and sub-categories are offered as suggestions, and users can enter new values.
+- **Image:** an optional image file. Files larger than 500 KB are rejected; a valid image is previewed in the form.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+As the user enters a name and selling price, the preview displays the product name and price after the selected discount.
+
+### Validation
+
+Submitting **Add Product** checks that:
+
+- The name, description, and category are not blank.
+- The selling price is a number greater than zero.
+- An entered cost price is a valid, non-negative number.
+- The minimum order quantity is at least one.
+
+Validation messages are shown beside the corresponding fields. An invalid form is not sent to the server.
+
+**Save Draft** uses the same form but only requires a product name. Draft products are submitted with `draft: true`; regular submissions use `draft: false`.
+
+### Saving and navigation
+
+The form sends a `POST` request to the products endpoint configured in [src/api.js](./src/api.js). Numeric values are converted to numbers before submission; an empty cost price is sent as `null`. The product payload also includes the image data, a default stock value of 20, and the draft status.
+
+While the request is in progress, the save buttons are disabled and the primary button displays **Saving...**. If the request fails, an error message appears in the form. After a successful save, the shared product list is refreshed and the user is taken to `/menu`. **Back to Menu** returns to the menu without submitting. **Schedule** is currently disabled because scheduling has not been implemented.
+
+### Tests
+
+FormPage tests are in [src/tests/FormPage.test.jsx](./src/tests/FormPage.test.jsx). They cover required-field validation (and confirm invalid submissions do not POST) and a successful product submission that redirects to the menu.
