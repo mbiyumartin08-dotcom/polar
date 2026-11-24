@@ -1,4 +1,7 @@
 // Edward - Mwai - detail page
+// Edit price with PATCH
+// Delete with confirmation
+// Handle product not found
 import { useEffect, useId, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
