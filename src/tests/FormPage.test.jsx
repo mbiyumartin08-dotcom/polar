@@ -36,4 +36,3 @@ test("valid submit POSTs the product and redirects to /menu", async () => {
   const post = fetchMock.mock.calls.find(([, o]) => o?.method === "POST");
   expect(JSON.parse(post[1].body)).toMatchObject({ name: "Air Test", category: "Running", price: 99.5 });
 });
-

@@ -1,4 +1,3 @@
-// Edward - Mwai - Dashboard page
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useProducts } from "../context/ProductsContext";
@@ -36,7 +35,6 @@ export default function Dashboard() {
 
   if (loading) return <p className="page status-message">Loading dashboard...</p>;
   if (error) return <p className="page status-message error">Could not load orders: {error}</p>;
-
 
   return (
     <section className="page">

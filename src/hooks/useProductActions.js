@@ -19,33 +19,32 @@ export default function useProductActions() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
 
-//Runs one request, returns true on success and false on failure.
-async function run(send) {
-  setSaving(true);
-  setError(null);
-  try {
-    await send();
-    refetch();
-    return true;
-  } catch (err) {
-    setError(err.message);
-    return false;
-  } finally {
-    setSaving(false);
+  // Runs one request, returns true on success and false on failure.
+  async function run(send) {
+    setSaving(true);
+    setError(null);
+    try {
+      await send();
+      refetch();
+      return true;
+    } catch (err) {
+      setError(err.message);
+      return false;
+    } finally {
+      setSaving(false);
+    }
   }
+
+  const addProduct = (product) =>
+    run(() => request(PRODUCTS_URL, { method: "POST", body: JSON.stringify(product) }));
+
+  const updatePrice = (id, price) =>
+    run(() =>
+      request(`${PRODUCTS_URL}/${id}`, { method: "PATCH", body: JSON.stringify({ price }) })
+    );
+
+  const deleteProduct = (id) =>
+    run(() => request(`${PRODUCTS_URL}/${id}`, { method: "DELETE" }));
+
+  return { addProduct, updatePrice, deleteProduct, saving, error };
 }
-
-const addProduct = (product) =>
-  run(() => request(PRODUCTS_URL, { method: "POST", body: JSON.stringify(product) }));
-
-const updatePrice = (id, price) =>
-  run(() =>
-    request(`${PRODUCTS_URL}/${id}`, { method: "PATCH", body: JSON.stringify({ price }) })
-  );
-
-const deleteProduct = (id) =>
-  run(() => request(`${PRODUCTS_URL}/${id}`, { method: "DELETE" }));
-
-return { addProduct, updatePrice, deleteProduct, saving, error };
-}
-

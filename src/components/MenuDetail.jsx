@@ -1,8 +1,3 @@
-// Edward - Mwai - detail page
-// Edit price with PATCH
-// Delete with confirmation
-// Handle product not found
-
 import { useEffect, useId, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
@@ -18,7 +13,7 @@ export default function MenuDetail() {
   const [newPrice, setNewPrice] = useState("");
   const [message, setMessage] = useState(null);
 
- 
+  // Put the current price in the input once the product has loaded
   useEffect(() => {
     if (product) setNewPrice(String(product.price));
   }, [product]);
@@ -47,7 +42,7 @@ export default function MenuDetail() {
     const ok = await updatePrice(product.id, price);
     if (ok) {
       setMessage({ type: "success", text: "Price updated" });
-      refetch(); 
+      refetch(); // reload this product so the page shows the new price
     }
   }
 

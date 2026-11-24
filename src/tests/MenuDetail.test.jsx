@@ -1,4 +1,3 @@
-// Edward - Mwai - detail tests
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Route, Routes } from "react-router-dom";
@@ -40,7 +39,6 @@ test("saving a new price sends PATCH with the price", async () => {
     expect(JSON.parse(patch[1].body)).toEqual({ price: 65 });
   });
 });
-
 
 test("delete asks for confirmation, sends DELETE and goes to /menu", async () => {
   const fetchMock = mockFetch();
