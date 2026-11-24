@@ -1,3 +1,4 @@
+// Edward - Mwai - Dashboard page
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useProducts } from "../context/ProductsContext";
